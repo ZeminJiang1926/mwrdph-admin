@@ -130,6 +130,8 @@ export default {
       let query = {
         //descending: this.sort.order === "descending",
         //...this.searchForm
+        pageIndex: this.page.current,
+        pageSize: this.page.size,
       };
       userService.getUser(query).then(data => {
         console.log(data);

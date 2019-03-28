@@ -3,7 +3,7 @@
     :current-page="current"
     :page-size="size"
     :total="total"
-    :page-sizes="[10, 20, 30, 40]"
+    :page-sizes="[50, 100, 200, 400]"
     layout="total, sizes, prev, pager, next, jumper"
     style="margin: -10px;"
     @size-change="handleSizeChange"
@@ -15,13 +15,13 @@
 export default {
   props: {
     current: {
-      default: 0
+      default:  1
     },
     size: {
-      default: 0
+      default: 50
     },
     total: {
-      default: 0
+      
     }
   },
   methods: {
@@ -30,14 +30,15 @@ export default {
         current: this.current,
         size: val,
         total: this.total
-      })
+      });
+     
     },
     handleCurrentChange (val) {
       this.$emit('change', {
         current: val,
         size: this.size,
         total: this.total
-      })
+      });
     }
   }
 }

@@ -84,7 +84,7 @@
         :current-page="page.current"
         :page-size="page.size"
         :total="page.total"
-        :page-sizes="[1,100, 200, 300, 400]"
+        :page-sizes="[1,50, 100, 200, 400]"
         layout="total, sizes, prev, pager, next, jumper"
         style="margin: -10px;"
         @size-change="handleSizeChange"
@@ -112,7 +112,7 @@ export default {
       multipleSelection: [],
       page: {
         current: 1,
-        size: 100,
+        size: 50,
         total: 0
       },
       sort: {
@@ -130,7 +130,8 @@ export default {
   methods: {
     getTableData() {
       let query = {
-       ...this.searchForm
+       pageIndex: this.page.current,
+       pageSize: this.page.size,
       };
       interfaceService.getPC(query).then(data => {
         console.log(data)

@@ -139,9 +139,9 @@ export default {
       let query = {
         pageIndex: this.page.current,
         pageSize: this.page.size,
-        sortBy: this.sort.prop,
-        descending: this.sort.order === "descending",
-        ...this.searchForm
+        //sortBy: this.sort.prop,
+        //descending: this.sort.order === "descending",
+        //...this.searchForm
       };
       interfaceService.getSection(query).then(data => {
         console.log(data);

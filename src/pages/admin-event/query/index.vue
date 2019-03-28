@@ -4,9 +4,9 @@
     <demo-page-main :table-data="table" :loading="loading"/>
     <demo-page-footer
       slot="footer"
-      :current="page.pageCurrent"
-      :size="page.pageSize"
-      :total="page.pageTotal"
+      :current="page.current"
+      :size="page.size"
+      :total="page.total"
       @change="handlePaginationChange"
     />
   </d2-container>
@@ -28,9 +28,9 @@ export default {
       table: [],
       loading: false,
       page: {
-        pageCurrent: 1,
-        pageSize: 10,
-        pageTotal: 0
+        current: 1,
+        size: 50,
+        total: 0
       }
     };
   },
@@ -50,31 +50,23 @@ export default {
       });
     },
     handlePaginationChange(val) {
-      this.$notify({
-        title: "分页变化",
-        message: `当前第${val.current}页 共${val.total}条 每页${val.size}条`
-      });
       this.page = val;
+      console.log(val);
       // nextTick 只是为了优化示例中 notify 的显示
-      this.$nextTick(() => {
-        this.$refs.header.handleFormSubmit();
-      });
+      this.getTableData();
     },
     handleSubmit(form) {
       this.loading = true;
       api
         .getIncidentByitems({
-          ...form
-          //...this.page
+          ...form,
+          pageIndex: this.page.current,
+          pageSize: this.page.size
         })
         .then(res => {
           this.loading = false;
-          this.$message({
-            title: '查询完毕',
-            type: 'success'
-          });
           this.table = res;
-          this.page.pageTotal = res.page.total;
+          this.page.total = res.page.total;
         })
         .catch(err => {
           this.loading = false;

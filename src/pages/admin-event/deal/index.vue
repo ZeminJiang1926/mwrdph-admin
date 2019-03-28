@@ -46,10 +46,10 @@
       </el-table-column>
       <el-table-column label="类型" prop="type" sortable="custom" :show-overflow-tooltip="true">
         <template slot-scope="scope">
-          <p v-if="scope.row.type=='0'">低速</p>
-          <p v-else-if="scope.row.type=='1'">超速</p>
-          <p v-else-if="scope.row.type=='2'">占用紧急车道</p>
-          <p v-else-if="scope.row.type=='3'">逆行</p>
+         <el-tag size="mini" type="warning" v-if="scope.row.type=='0'">低速</el-tag>
+          <el-tag size="mini" type="warning" v-if="scope.row.type=='1'">超速</el-tag>
+          <el-tag size="mini" type="danger" v-if="scope.row.type=='2'">占用紧急车道</el-tag>
+          <el-tag size="mini" type="danger" v-if="scope.row.type=='3'">逆行</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="发生时间" :show-overflow-tooltip="true">
@@ -125,6 +125,8 @@ export default {
   methods: {
     getTableData() {
       let query = {
+        pageIndex: this.page.current,
+        pageSize: this.page.size,
         //descending: this.sort.order === "descending",
         //...this.searchForm
       };
