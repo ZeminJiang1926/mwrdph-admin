@@ -7,17 +7,20 @@
       <el-form-item prop="lane_ip" label="网段IP" :rules="[{ required: true, message: '不能为空'}]">
         <el-input v-model="form.lane_ip"></el-input>
       </el-form-item>
+
       <el-form-item prop="section_id" label="路段id" :rules="[{ required: true, message: '不能为空'}]">
         <el-input v-model="form.section_id"></el-input>
       </el-form-item>
+
       <el-form-item prop="lnglat" label="经纬度" :rules="[{ required: true, message: '不能为空'}]">
         <el-form-item inline:true>
-        <el-input v-model="form.lnglat" style="width: 180px;padding-right:10px;"></el-input>
-        <el-button type="primary" :loading="loading" @click="mapVisible=true">坐标拾取</el-button>
-          </el-form-item>
+          <el-input v-model="form.lnglat" style="width: 180px;padding-right:10px;"></el-input>
+          <el-button type="primary" :loading="loading" @click="mapVisible=true">坐标拾取</el-button>
+        </el-form-item>
+
         <el-dialog title="坐标拾取" :visible.sync="mapVisible" :modal-append-to-body="false">
           <el-form-item>
-            <el-input id="lnglat" style="width: 180px;padding-right:10px;" v-model="form.lnglat"></el-input>
+            <el-input id="lnglat" style="width: 180px; padding-right:10px;" v-model="form.lnglat"></el-input>
             <el-button type="primary" :loading="loading" @click="saveLngLat">保存</el-button>
             <el-button @click="close">取消</el-button>
           </el-form-item>
@@ -26,38 +29,51 @@
             :series="chartSeries"
             :tooltip="chartTooltip"
             :after-set-option-once="afterSet"
+            
           ></ve-amap>
         </el-dialog>
+
       </el-form-item>
-       <el-form-item prop="direction" label="方向" :rules="[{ required: true, message: '不能为空'}]">
-        <el-switch v-model="form.direction "
-         active-text="正向" active-value="1"
-         inactive-text="反向" inactive-value="0">
-         </el-switch>
+      <el-form-item prop="direction" label="方向">
+        <el-switch
+          v-model="form.direction "
+          active-text="正向"
+          active-value="0"
+          inactive-text="反向"
+          inactive-value="1"
+        ></el-switch>
       </el-form-item>
-      <el-form-item prop="pc_id" label="工控机ID" :rules="[{ required: true, message: '不能为空'}]">
+      <el-form-item prop="pc_id" label="工控机ID">
         <el-input v-model="form.pc_id"></el-input>
       </el-form-item>
-       <el-form-item prop="radar_alive" label="雷达状态" :rules="[{ required: true, message: '不能为空'}]">
-        <el-switch v-model="form.radar_alive"
-         active-text="在线"
-         inactive-text="离线">
-         </el-switch>
-      </el-form-item>
-      <el-form-item prop="has_camera" label="摄像头" :rules="[{ required: true, message: '不能为空'}]">
-        <el-switch v-model="form.has_camera"
-          active-text="有"
-          inactive-text="无">
-        >
-        </el-switch >
-      </el-form-item>
-      <el-form-item prop="camera_alive" label="视频状态" :rules="[{ required: true, message: '不能为空'}]">
-        <el-switch v-model="form.camera_alive"
+      <el-form-item prop="radar_alive" label="雷达状态">
+        <el-switch
+          v-model="form.radar_alive"
           active-text="在线"
-          inactive-text="离线">
-        >
-        </el-switch >
+          active-value="1"
+          inactive-text="离线"
+          inactive-value="0"
+        ></el-switch>
       </el-form-item>
+      <el-form-item prop="has_camera" label="摄像头">
+        <el-switch
+          v-model="form.has_camera"
+          active-text="有"
+          active-value="1"
+          inactive-text="无"
+          inactive-value="0"
+        >></el-switch>
+      </el-form-item>
+      <el-form-item prop="camera_alive" label="视频状态">
+        <el-switch
+          v-model="form.camera_alive"
+          active-text="在线"
+          active-value="1"
+          inactive-text="离线"
+          inactive-value="0"
+        >></el-switch>
+      </el-form-item>
+      <!--
       <el-form-item prop="is_deleted" label="删除" :rules="[{ required: true, message: '不能为空'}]">
         <el-switch v-model="form.is_deleted"
           active-text="是"
@@ -65,6 +81,7 @@
         >
         </el-switch >
       </el-form-item>
+      -->
       <el-form-item>
         <el-button type="primary" :loading="loading" @click="saveInterface">保存</el-button>
         <el-button @click="close">取消</el-button>
@@ -87,7 +104,7 @@ export default {
       v: "1.4.3",
       amap: {
         resizeEnable: true,
-        center: [120.118889,36.002131],
+        center: [120.118889, 36.002131],
         zoom: 10
       }
     };
@@ -96,10 +113,15 @@ export default {
       loading: false,
       dialogVisible: false,
       form: {
-        name: "",
-        path: "",
-        method: "",
-        description: ""
+        name: '',
+        lane_ip: '',
+        direction: '',
+        has_camera: '',
+        camera_alive: '',
+        radar_alive: '',
+        section_id:'',
+        lnglat:'',
+        pc_id:''
       },
       mapVisible: false,
       chartSeries: [
@@ -107,7 +129,7 @@ export default {
           type: "scatter",
           coordinateSystem: "bmap",
           data: [
-            [120.118889,36.002131, 1] // 经度，维度，value，...
+            [120.118889, 36.002131, 1] // 经度，维度，value，...
           ]
         }
       ]
@@ -126,18 +148,19 @@ export default {
       this.$refs.form.resetFields();
       if (this.entity.id) {
         let form = {};
+        console.log(this.entity);
         form.name = this.entity.name;
         form.lane_ip = this.entity.lane_ip;
         form.direction = this.entity.direction;
         form.pc_id = this.entity.pc_id;
         form.lnglat = this.entity.lng + "," + this.entity.lat;
-        form.camera_alive=this.entity.camera_alive;
-        form.radar_alive=this.entity.radar_alive;
-        form.section_id=this.entity.section_id;
-        form.has_camera=this.entity.has_camera;
+        form.camera_alive = this.entity.camera_alive;
+        form.radar_alive = this.entity.radar_alive;
+        form.section_id = this.entity.section_id;
+        form.has_camera = this.entity.has_camera;
         this.form = form;
       } else {
-        this.form = {};
+        //this.form = {};
       }
     },
     saveInterface() {
@@ -181,14 +204,13 @@ export default {
       this.$refs["form"].resetFields();
       this.dialogVisible = false;
     },
-    saveLngLat()
-    {
+    saveLngLat() {
       this.$message({
-          message: "坐标拾取成功",
-          type: "success"
-        });
-        this.form.lnglat=document.getElementById("lnglat").value;
-
+        message: "坐标拾取成功",
+        type: "success"
+      });
+      this.form.lnglat = document.getElementById("lnglat").value;
+      this.mapVisible = false;
     },
     afterSet: function(echarts) {
       var amap = echarts
@@ -199,7 +221,6 @@ export default {
         console.log(e.lnglat.getLng() + "," + e.lnglat.getLat());
         document.getElementById("lnglat").value =
           e.lnglat.getLng() + "," + e.lnglat.getLat();
-          
       });
     }
   }

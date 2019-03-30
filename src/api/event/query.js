@@ -32,3 +32,10 @@ export function getIncidentByitems (query) {
     params: query
   })
 }
+export function updateIncident (data) {
+  return request({
+    url: '/incident/update',
+    method: 'post',
+    data: data
+  })
+}

@@ -16,9 +16,11 @@
       <el-form-item prop="name" label="用户"  :rules="[{ required: true, message: '不能为空'}]">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
+      <!--
       <el-form-item prop="id" label="ID"  :rules="[{ required: true, message: '不能为空'}]">
         <el-input v-model="form.id"></el-input>
       </el-form-item>
+      -->
       <el-form-item prop="password" label="密码"  :rules="[{ required: true, message: '不能为空'}]">
         <el-input v-model="form.password"></el-input>
       </el-form-item>
@@ -93,7 +95,7 @@ export default {
       if (this.user.id) {
         let form = {};
         form.name = this.user.name;
-        form.id = this.user.id;
+        //form.id = this.user.id;
         form.tel = this.user.tel;
         form.age = this.user.age;
         form.role = this.user.role;

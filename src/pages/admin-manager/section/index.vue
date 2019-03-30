@@ -60,7 +60,7 @@
         <template slot-scope="scope">{{scope.row.camera_count}}</template>
       </el-table-column>
       <el-table-column label="创建时间" :show-overflow-tooltip="true">
-        <template slot-scope="scope">{{scope.row.created_time}}</template>
+        <template slot-scope="scope">{{scope.row.create_time}}</template>
       </el-table-column>
       <el-table-column label="更新时间" :show-overflow-tooltip="true">
         <template slot-scope="scope">{{scope.row.update_time}}</template>
@@ -100,6 +100,7 @@
     </template>
     <edit-form :entity="entity" :isEdit="isEdit" v-model="editFormVisible" @submit="getTableData"/>
   </d2-container>
+  
 </template>
 <script>
 import * as interfaceService from "@/api/manager/section";

@@ -5,7 +5,7 @@ export default [
     title: '事件审查',
     icon: 'gear',
     children: [
-      { path: '/admin-event/deal', title: '事件处理', icon: 'history' },
+      // { path: '/admin-event/deal', title: '事件处理', icon: 'history' },
       { path: '/admin-event/query', title: '事件查询', icon: 'search' }
 
     ]

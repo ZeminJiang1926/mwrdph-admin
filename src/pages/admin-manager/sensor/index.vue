@@ -69,14 +69,14 @@
       </el-table-column>
       <el-table-column label="雷达状态" prop="method" sortable="custom" :show-overflow-tooltip="true">
         <template slot-scope="scope">
-         <p v-if="scope.row.radar_alive=='0'">异常</p>
-           <p v-else-if="scope.row.radar_alive=='1'">正常</p>
+         <el-tag  size="mini" type="danger" v-if="scope.row.radar_alive=='0'">异常</el-tag>
+           <el-tag size="mini" type="success" v-else-if="scope.row.radar_alive=='1'">正常</el-tag>
           </template>
       </el-table-column>
       <el-table-column label="视频状态" :show-overflow-tooltip="true">
         <template slot-scope="scope">
-          <p v-if="scope.row.camera_alive=='0'">异常</p>
-           <p v-else-if="scope.row.camera_alive=='1'">正常</p>
+          <el-tag  size="mini" type="danger" v-if="scope.row.camera_alive=='0'">异常</el-tag>
+           <el-tag size="mini" type="success" v-else-if="scope.row.camera_alive=='1'">正常</el-tag>
           </template>
       </el-table-column>
       <el-table-column label="网段IP" :show-overflow-tooltip="true">

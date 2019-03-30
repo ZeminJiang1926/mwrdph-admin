@@ -48,8 +48,8 @@
       </el-table-column>
       <el-table-column label="角色" prop="role" sortable="custom" :show-overflow-tooltip="true">
         <template slot-scope="scope">
-          <p v-if="scope.row.role=='1'">审查员</p>
-          <p v-else-if="scope.row.role=='2'">管理员</p>
+          <el-tag v-if="scope.row.role=='1'">审查员</el-tag>
+          <el-tag v-else-if="scope.row.role=='2'">管理员</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="联系方式" prop="email" sortable="custom" :show-overflow-tooltip="true">

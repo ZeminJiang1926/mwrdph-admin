@@ -1,9 +1,11 @@
 <template>
   <el-dialog title="工控机信息" :visible.sync="dialogVisible" @opened="dialogOpen">
     <el-form ref="form" :model="form" label-width="80px" size="small">
+      <!--
       <el-form-item prop="id" label="工控机ID" style="width: 265px;" :rules="[{ required: true, message: '不能为空'}]">
         <el-input v-model="form.id"></el-input>
       </el-form-item>
+      -->
       <el-form-item prop="lnglat" label="经纬度" :rules="[{ required: true, message: '不能为空'}]">
         <el-input id="showLngLat" v-model="form.lnglat" style="width: 180px;padding-right:10px;"></el-input>
         <el-button type="primary" :loading="loading" @click="mapVisible=true">坐标拾取</el-button>
@@ -91,7 +93,7 @@ export default {
           let form = {};
           form.user_name = this.entity.user_name;
           form.user_password = this.entity.user_password;
-          form.id = this.entity.id;
+          //form.id = this.entity.id;
           form.lnglat = this.entity.lng+","+this.entity.lat;
           this.form = form;
       } else {
@@ -106,7 +108,7 @@ export default {
           let lat = str[1];
           this.loading = true;
           interfaceService
-            .addPc({ ...this.form,lng,lat,id: this.entity.id })
+            .updatePc({ ...this.form,lng,lat,id: this.entity.id })
             .then(data => {
               this.loading = false;
               this.dialogVisible = false;
@@ -123,7 +125,7 @@ export default {
           let lat = str[1];
            this.loading = true;
           interfaceService
-            .updatePc({ ...this.form,lat,lng, id: this.entity.id })
+            .addPc({ ...this.form,lat,lng, id: this.entity.id })
             .then(data => {
               this.loading = false;
               this.dialogVisible = false;
@@ -145,6 +147,7 @@ export default {
         type: "success"
       });
        this.form.lnglat=document.getElementById("lnglat").value;
+       this.mapVisible=false;
     },
     close() {
       this.$refs["form"].resetFields();

@@ -9,7 +9,7 @@
       >
         <el-input v-model="form.name"></el-input>
       </el-form-item>
-      <el-form-item prop="radar_count" label="雷达数" :rules="[{ required: true, message: '不能为空'}]">
+      <el-form-item prop="radar_count" label="雷达数" :rules="[{ required: false, message: '不能为空'}]">
         <el-input-number v-model="form.radar_count" :min="1" :max="1000" label="雷达数"></el-input-number>
       </el-form-item>
       <el-form-item prop="camera_count" label="摄像头数" :rules="[{ required: true, message: '不能为空'}]">
@@ -146,6 +146,7 @@ export default {
         type: "success"
       });
        this.form.lnglat=document.getElementById("lnglat").value;
+       this.mapVisible=false;
     },
     close() {
       this.$refs["form"].resetFields();

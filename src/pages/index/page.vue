@@ -1,20 +1,40 @@
 <template>
   <d2-container :filename="filename">
+    <template>
+      <el-carousel :interval="4000" type="card" height="500px" style="margin-top:40px">
+        <el-carousel-item v-for="item in imgSrc" :key="item.id" style="background-color: #ebf1f6;height:auto ">
+          <img height="480px" width="640px" :src="item.url">
+          
+        </el-carousel-item>
+      </el-carousel>
+    </template>
+  </d2-container>
+</template>
+    <!--
     <template slot="header">仪表盘</template>
+   
     <div style="height: 400px; margin: -16px;">
+      
       <SplitPane :min-percent="50" :default-percent="60" split="vertical">
         <template slot="paneL">
           <div style="margin: 10px;">事故统计
             <ve-line :data="chartData" :settings="chartSettings"></ve-line>
-          </div>
+          
         </template>
         <template slot="paneR">
           <div style="margin: 10px;">
             <ve-pie :data="chartDataPie"></ve-pie>
           </div>
+          
         </template>
       </SplitPane>
     </div>
+    --> 
+    <!--
+    <div style="margin-left: 20%;">
+    <img src="./image/welcome.png" height="560" width="720">
+    </div>
+    -->
   </d2-container>
 </template>
 
@@ -28,6 +48,11 @@ export default {
       area: true
     };
     return {
+      imgSrc: [
+        { url: "image/welcome_1.png", id: "数据分析" },
+        { url: "image/welcome_2.png", id: "精美图表" },
+        { url: "image/welcome_3.png", id: "简易操作" }
+      ],
       filename: __filename,
       chartData: {
         columns: ["日期", "低速", "超速", "占用紧急车道", "逆行"],
@@ -46,7 +71,10 @@ export default {
       },
       chartDataPie: {
         columns: ["日期", "数量"],
-        rows: [{ 日期: "雷达在线", 数量: 1393 }, { 日期: "雷达离线", 数量: 3530 }]
+        rows: [
+          { 日期: "雷达在线", 数量: 1393 },
+          { 日期: "雷达离线", 数量: 3530 }
+        ]
       }
     };
   },
@@ -85,4 +113,11 @@ export default {
   bottom: 20px;
   left: 20px;
 }
+el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 200px;
+    margin: 0
+    }
 </style>

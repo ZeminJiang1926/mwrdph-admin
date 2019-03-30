@@ -91,7 +91,7 @@
         @current-change="handleCurrentChange"
       ></el-pagination>
     </template>
-    <edit-form :entity="entity" :isEdit="isEdit" v-model="editFormVisible"  @submit="getTableData"/>
+    <edit-form :entity="entity" :isEdit="isEdit" v-model="editFormVisible" @submit="getTableData"/>
   </d2-container>
 </template>
 <script>
@@ -103,9 +103,8 @@ export default {
   data() {
     return {
       searchForm: {
-        id:"",
-        user_name:""
-        
+        id: "",
+        user_name: ""
       },
       loading: false,
       tableData: [],
@@ -121,7 +120,7 @@ export default {
       },
       entity: {},
       editFormVisible: false,
-      isEdit:true
+      isEdit: true
     };
   },
   mounted() {
@@ -130,24 +129,24 @@ export default {
   methods: {
     getTableData() {
       let query = {
-       pageIndex: this.page.current,
-       pageSize: this.page.size,
+        pageIndex: this.page.current,
+        pageSize: this.page.size
       };
       interfaceService.getPC(query).then(data => {
-        console.log(data)
+        console.log(data);
         this.tableData = data;
-        console.log(data.rows)
+        console.log(data.rows);
         this.page.total = data.totalCount;
       });
     },
     getTableDataByItems() {
       let query = {
-       ...this.searchForm
+        ...this.searchForm
       };
       interfaceService.getPCByItems(query).then(data => {
-        console.log(data)
+        console.log(data);
         this.tableData = data;
-        console.log(data.rows)
+        console.log(data.rows);
         this.page.total = data.totalCount;
       });
     },
@@ -175,10 +174,12 @@ export default {
     },
     openEditForm(entity) {
       this.entity = entity;
+      this.isEdit = true;
       this.editFormVisible = true;
     },
     add() {
       this.entity = {};
+      this.isEdit = false;
       this.editFormVisible = true;
     },
     batchDel() {
@@ -188,9 +189,7 @@ export default {
         cancelButtonText: "取消"
       }).then(() => {
         interfaceService
-          .delPcs(
-            JSON.stringify(this.multipleSelection.map(s => s.id))
-          )
+          .delPcs(JSON.stringify(this.multipleSelection.map(s => s.id)))
           .then(() => {
             this.getTableData();
           });

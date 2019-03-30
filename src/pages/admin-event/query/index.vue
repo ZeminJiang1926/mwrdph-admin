@@ -1,7 +1,7 @@
 <template>
   <d2-container :filename="filename">
     <demo-page-header slot="header" @submit="handleSubmit" ref="header"/>
-    <demo-page-main :table-data="table" :loading="loading"/>
+    <demo-page-main @submit="handleEdit " :table-data="table" :loading="loading"/>
     <demo-page-footer
       slot="footer"
       :current="page.current"
@@ -72,6 +72,9 @@ export default {
           this.loading = false;
           console.log("err", err);
         });
+    },
+    handleEdit() {
+      this.getTableData();
     }
   }
 };
