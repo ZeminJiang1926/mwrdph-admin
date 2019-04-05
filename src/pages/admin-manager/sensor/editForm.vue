@@ -18,21 +18,27 @@
           <el-button type="primary" :loading="loading" @click="mapVisible=true">坐标拾取</el-button>
         </el-form-item>
 
-        <el-dialog title="坐标拾取" :visible.sync="mapVisible" :modal-append-to-body="false">
+        <el-dialog title="坐标拾取" :visible.sync="mapVisible" append-to-body>
           <el-form-item>
-            <el-input id="lnglat" style="width: 180px; padding-right:10px;" v-model="form.lnglat"></el-input>
-            <el-button type="primary" :loading="loading" @click="saveLngLat">保存</el-button>
-            <el-button @click="close">取消</el-button>
+            <div style="text-align:center;">
+              <i class="el-icon-location"></i>
+              position: [{{ lng }}, {{ lat }}]
+            </div>
           </el-form-item>
-          <ve-amap
-            :settings="chartSettings"
-            :series="chartSeries"
-            :tooltip="chartTooltip"
-            :after-set-option-once="afterSet"
-            
-          ></ve-amap>
+          <el-form-item>
+            <div class="amap-wrapper">
+              <el-amap vid="amapDemo" class="amap-demo" :events="events"></el-amap>
+            </div>
+          </el-form-item>
+          <el-form-item>
+            <div class="toolbar" style="text-align:center;">
+              <el-button-group>
+                <el-button type="primary" :loading="loading" @click="saveLngLat">保存</el-button>
+                <el-button @click="close">取消</el-button>
+              </el-button-group>
+            </div>
+          </el-form-item>
         </el-dialog>
-
       </el-form-item>
       <el-form-item prop="direction" label="方向">
         <el-switch
@@ -99,6 +105,7 @@ export default {
     isEdit: Boolean
   },
   data() {
+      let self = this;
     this.chartSettings = {
       key: "4b5f2cf2cba25200cc6b68c398468899",
       v: "1.4.3",
@@ -110,18 +117,28 @@ export default {
     };
     this.chartTooltip = { show: true };
     return {
+      events: {
+        click(e) {
+          console.log(e.lnglat);
+          let { lng, lat } = e.lnglat;
+          self.lat = lat;
+          self.lng = lng;
+          //document.getElementById("lnglat").value = lng + "," + lat;
+          //self.form.lnglat = lng + "," + lat;
+        }
+      },
       loading: false,
       dialogVisible: false,
       form: {
-        name: '',
-        lane_ip: '',
-        direction: '',
-        has_camera: '',
-        camera_alive: '',
-        radar_alive: '',
-        section_id:'',
-        lnglat:'',
-        pc_id:''
+        name: "",
+        lane_ip: "",
+        direction: "",
+        has_camera: "",
+        camera_alive: "",
+        radar_alive: "",
+        section_id: "",
+        lnglat: "",
+        pc_id: ""
       },
       mapVisible: false,
       chartSeries: [
@@ -132,7 +149,10 @@ export default {
             [120.118889, 36.002131, 1] // 经度，维度，value，...
           ]
         }
-      ]
+      ],
+      lng: 0,
+      lat: 0,
+      lnglat: ""
     };
   },
   watch: {
@@ -202,14 +222,14 @@ export default {
     },
     close() {
       this.$refs["form"].resetFields();
-      this.dialogVisible = false;
+      this.mapVisible = false;
     },
     saveLngLat() {
       this.$message({
         message: "坐标拾取成功",
         type: "success"
       });
-      this.form.lnglat = document.getElementById("lnglat").value;
+      this.form.lnglat = this.lng + "," + this.lat;
       this.mapVisible = false;
     },
     afterSet: function(echarts) {
@@ -222,8 +242,23 @@ export default {
         document.getElementById("lnglat").value =
           e.lnglat.getLng() + "," + e.lnglat.getLat();
       });
+    },
+    function() {
+      let amapManager = new VueAMap.AMapManager();
+      let o = amapManager.getMap();
+      o.on("click", function(e) {
+        console.log(e.lnglat.getLng() + "," + e.lnglat.getLat());
+        //document.getElementById("lnglat").value =
+        // e.lnglat.getLng() + "," + e.lnglat.getLat();
+      });
     }
   }
 };
 </script>
+<style>
+.amap-wrapper {
+  width: 100%;
+  height: 400px;
+}
+</style>
 

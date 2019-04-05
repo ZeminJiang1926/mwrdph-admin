@@ -11,7 +11,7 @@ process.env.VUE_APP_BUILD_TIME = require('dayjs')().format('YYYY-M-D HH:mm:ss')
 let publicPath = '/'
 
 module.exports = {
-/** 
+/**
   devServer: {
     proxy: {
       '/backend': {

@@ -26,15 +26,23 @@ import Axios from 'axios'
 import pluginExport from '@d2-projects/vue-table-export'
 import pluginImport from '@d2-projects/vue-table-import'
 import VueVideoPlayer from 'vue-video-player'
+import VueAMap from 'vue-amap'
 Vue.use(d2Admin)
 Vue.use(VCharts)
 Vue.use(ElementUI)
 Vue.use(pluginExport)
 Vue.use(pluginImport)
 Vue.use(VueVideoPlayer)
+Vue.use(VueAMap)
 Vue.component('d2-grid-layout', GridLayout)
 Vue.component('d2-grid-item', GridItem)
 Vue.component('SplitPane', SplitPane)
+VueAMap.initAMapApiLoader({
+  key: 'your amap key',
+  plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor'],
+  // 默认高德 sdk 版本为 1.4.4
+  v: '1.4.4'
+})
 Vue.prototype.$axios = Axios
 Axios.defaults.baseURL = '/api'
 Axios.defaults.headers.post['Content-Type'] = 'application/json'
